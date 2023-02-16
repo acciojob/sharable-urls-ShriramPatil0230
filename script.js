@@ -1,18 +1,26 @@
-// your code here
-const express = require('express');
-const path = require('path');
+var form = document.querySelector("form");
+var h3 = document.querySelector("h3");
+var nameElement = document.querySelector("#name"); 
+var yearElement = document.querySelector("#year"); 
+var btn = document.querySelector("#button"); 
 
-const app = express();
-
-app.use(express.static(__dirname))
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/main.html'));
-});
-//your code here
-app.post('/add', (req, res) => {
-  const {a,b} = req.body;
-  res.status(200).send(a+b);
-  // res.sendFile(path.join(__dirname + '/main.html'));
-});
-module.exports = app;
+function handleSubmit(event) {
+	event.preventDefault();
+	
+	var h3Value= 'https://localhost:8080/';
+	var name = nameElement.value;
+	var year = yearElement.value;
+	
+	if(name && year){
+		h3Value += '?name=' + name + '&year=' + year;
+		
+	} else if(name && !year){
+		h3Value += '?name=' + name ;
+	}
+	else if(!name && year){
+		h3Value += '?year=' + year ;
+	}
+	h3.textContent = h3Value;
+	
+}
+form.addEventListener('submit', handleSubmit);
